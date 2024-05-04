@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книги</title>
+    <style>
+        .Book {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="Books-list"></div>
+    <div>
+        <input type="text" id="title" placeholder="Название книги">
+        <input type="text" id="author" placeholder="Автор">
+        <button onclick="addBook()">Добавить книгу</button>
+    </div>
+
+    <script>
+        let Books = [];
+
+        function Book(title, author) {
+            this.title = title;
+            this.author = author;
+        }
+
+        function addBook() {
+            const titleInput = document.getElementById('title');
+            const authorInput = document.getElementById('author');
+
+            const title = titleInput.value.trim();
+            const author = authorInput.value.trim();
+
+            if (title === '' || author === '') {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+
+            const newBook = new Book(title, author);
+            Books.push(newBook);
+
+            displayBooks();
+            titleInput.value = '';
+            authorInput.value = '';
+        }
+
+        function deleteBook(index) {
+            Books.splice(index, 1);
+            displayBooks();
+        }
+
+        function displayBooks() {
+            const BooksList = document.getElementById('Books-list');
+            BooksList.innerHTML = '';
+
+            Books.forEach((Book, index) => {
+                const BookElement = document.createElement('div');
+                BookElement.classList.add('Book');
+                BookElement.innerHTML = `
+                    <p><strong>Название:</strong> ${Book.title}</p>
+                    <p><strong>Автор:</strong> ${Book.author}</p>
+                    <button onclick="deleteBook(${index})">Удалить</button>
+                    <button onclick="updateBook(${index})">Изменить</button>
+                `;
+                BooksList.appendChild(BookElement);
+            });
+        }
+        function updateBook(index){
+            const titleInput = document.getElementById('title');
+            const AuthorInput = document.getElementById('author');
+
+            if (title.value === '' || author.value === '') {
+                alert('Пожалуйста, заполните все поля');
+            }
+            else {
+                addBook();
+                deleteBook(index);
+
+                titleInput.value = '';
+                authorInput.value = '';
+            }    
+        }
+    </script>
+</body>
+</html>
